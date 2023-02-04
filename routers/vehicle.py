@@ -14,45 +14,45 @@ vehicle_router = APIRouter()
 
 # CRUD vehicle
 @vehicle_router.post('/vehicle', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
-def create_vehicle(vehicle: Vehicle):
+def create(vehicle: Vehicle):
     db = Session()
-    VehicleService.create_vehicle(db, vehicle)
-    return JSONResponse(status_code=201, content={"message": "Vehicle created successfully"})
+    result=VehicleService.create_vehicle(db, vehicle)
+    return JSONResponse(status_code=201, content=jsonable_encoder(result))
 
 
-@vehicle_router.get('/vehicle', tags = ['Vehicle'])
-def get_vehicle():
+@vehicle_router.get('/vehicles', tags = ['Vehicle'])
+def get():
     db = Session()
-    vehicle = VehicleService.get_vehicles(db)
-    return JSONResponse(status_code=200, content=jsonable_encoder(vehicle))
+    result = VehicleService.get_vehicles(db)
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 @vehicle_router.get('/vehicle/{id}', tags = ['Vehicle'])
-def get_vehicle_by_id(id: int):
+def get_vehicle(id: int):
     db = Session()
-    vehicle = VehicleService.get_vehicle(db, id)
-    if not vehicle:
+    result = VehicleService.get_vehicle(db, id)
+    if not result:
         return JSONResponse(status_code=404, content={"message": "Vehicle not found"})
     else:
-        return JSONResponse(status_code=200, content=jsonable_encoder(vehicle))
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 @vehicle_router.put('/vehicle/{id}', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
-def update_vehicle(vehicle: Vehicle):
+def update(vehicle: Vehicle):
     db = Session()
-    result= VehicleService.get_vehicle(db, id)
-    if not vehicle:
+    result= VehicleService.get_vehicle(db, vehicle.id)
+    if not result:
         return JSONResponse(status_code=404, content={"message": "Vehicle not found"})
     else:
-        VehicleService.update_vehicle(db, id, vehicle)
-        return JSONResponse(status_code=200, content={"message": "Vehicle updated successfully"})
+        VehicleService.update_vehicle(db, vehicle.id, vehicle)
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
     
 
 @vehicle_router.delete('/vehicle/{id}', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
-def delete_vehicle(vehicle: Vehicle):
+def delete(vehicle: Vehicle):
     db = Session()
-    result= VehicleService.get_vehicle(db, id)
-    if not vehicle:
+    result= VehicleService.get_vehicle(db, vehicle.id)
+    if not result:
         return JSONResponse(status_code=404, content={"message": "Vehicle not found"})
     else:
         VehicleService.delete_vehicle(db, id)
-        return JSONResponse(status_code=200, content={"message": "Vehicle deleted successfully"})
+        return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
