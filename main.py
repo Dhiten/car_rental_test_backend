@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from config.database import Base, engine
-from router import include_routes
+from routers.router import include_routes
 from middlewares import add_middlewares
 
 
