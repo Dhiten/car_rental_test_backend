@@ -15,13 +15,13 @@ person_router = APIRouter()
 def create(person: PersonCreate):
     db = Session()
     person.date_of_birth = datetime.strptime(person.date_of_birth, '%m/%d/%Y')
-    result = PersonService.create_person(db, person)
+    result = PersonService.create(db, person)
     return JSONResponse(status_code=201, content=jsonable_encoder(result))
 
 @person_router.get('/person', tags = ['Person'])
 def get():
     db = Session()
-    result = PersonService.get_persons(db)
+    result = PersonService.get(db)
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 @person_router.get('/person/{id}', tags = ['Person'])
@@ -41,7 +41,7 @@ def update(person: PersonCreate):
     if not result:
         return JSONResponse(status_code=404, content={"message": "Person not found"})
     else:
-        PersonService.update_person(db, person.id, person)
+        PersonService.update(db, person.id, person)
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 @person_router.delete('/person/{id}', tags = ['Person'], dependencies=[Depends(JWTHandler())])
@@ -51,5 +51,5 @@ def delete(person: PersonCreate):
     if not person:
         return JSONResponse(status_code=404, content={"message": "Person not found"})
     else:
-        PersonService.delete_person(db, person.id)
+        PersonService.delete(db, person.id)
         return JSONResponse(status_code=200, content=jsonable_encoder(result))

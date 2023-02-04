@@ -14,21 +14,21 @@ vehicle_person_router = APIRouter()
 @vehicle_person_router.post('/vehicle_person', tags = ['VehiclePerson'], dependencies=[Depends(JWTHandler())])
 def create(vehicle_person: VehiclePerson):
     db = Session()
-    result = VehicleToPerson.create_vehicle_person(db, vehicle_person)
+    result = VehicleToPerson.create(db, vehicle_person)
     return JSONResponse(status_code=201, content=jsonable_encoder(result))
 
 #Get all the relationships
 @vehicle_person_router.get('/vehicle_person', tags = ['VehiclePerson'])
 def get():
     db = Session()
-    result = VehicleToPerson.get_vehicle_persons(db)
+    result = VehicleToPerson.get(db)
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 #Get relationship by id
 @vehicle_person_router.get('/vehicle_person/{vehicle_id}/{person_id}', tags = ['VehiclePerson'])
 def get_relationship(vehicle_id: int, person_id: int):
     db = Session()
-    result = VehicleToPerson.get_vehicle_person(db, vehicle_id, person_id)
+    result = VehicleToPerson.get_vehicleToPerson(db, vehicle_id, person_id)
     if not result:
         return JSONResponse(status_code=404, content={"message": "Rent not found"})
     else:
@@ -38,7 +38,7 @@ def get_relationship(vehicle_id: int, person_id: int):
 @vehicle_person_router.get('/vehicle_person/person/{person_id}', tags = ['VehiclePerson'])
 def get_relationships_person(person_id: int):
     db = Session()
-    result = VehicleToPerson.get_vehicle_person_listVehicles(db, person_id)
+    result = VehicleToPerson.get_vehicles_by_person(db, person_id)
     if not result:
         return JSONResponse(status_code=404, content={"message": "Cars not found"})
     else:
@@ -48,7 +48,7 @@ def get_relationships_person(person_id: int):
 @vehicle_person_router.get('/vehicle_person/vehicle/{vehicle_id}', tags = ['VehiclePerson'])
 def get_relationships_vehicle(vehicle_id: int):
     db = Session()
-    result = VehicleToPerson.get_vehicle_person_listPersons(db, vehicle_id)
+    result = VehicleToPerson.get_People_by_vehicle(db, vehicle_id)
     if not result:
         return JSONResponse(status_code=404, content={"message": "Persons not found"})
     else:
@@ -58,20 +58,20 @@ def get_relationships_vehicle(vehicle_id: int):
 @vehicle_person_router.put('/vehicle_person/{vehicle_id}/{person_id}', tags = ['VehiclePerson'], dependencies=[Depends(JWTHandler())])
 def update(vehicle_person: VehiclePerson):
     db = Session()
-    result= VehicleToPerson.get_vehicle_person(db, vehicle_person.vehicle_id, vehicle_person.person_id)
+    result= VehicleToPerson.get_vehicleToPerson(db, vehicle_person.vehicle_id, vehicle_person.person_id)
     if not result:
         return JSONResponse(status_code=404, content={"message": "Relationship not found"})
     else:
-        VehicleToPerson.update_vehicle_person(db, vehicle_person.vehicle_id, vehicle_person.person_id, vehicle_person)
+        VehicleToPerson.update(db, vehicle_person.vehicle_id, vehicle_person.person_id, vehicle_person)
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 #Delete relationship
 @vehicle_person_router.delete('/vehicle_person/{vehicle_id}/{person_id}', tags = ['VehiclePerson'], dependencies=[Depends(JWTHandler())])
 def delete(vehicle_id: int, person_id: int):
     db = Session()
-    result= VehicleToPerson.get_vehicle_person(db, vehicle_id, person_id)
+    result= VehicleToPerson.get_vehicleToPerson(db, vehicle_id, person_id)
     if not result:
         return JSONResponse(status_code=404, content={"message": "Rent not found"})
     else:
-        VehicleToPerson.delete_vehicle_person(db, vehicle_id, person_id)
+        VehicleToPerson.delete(db, vehicle_id, person_id)
         return JSONResponse(status_code=200, content=jsonable_encoder(result))

@@ -16,14 +16,14 @@ vehicle_router = APIRouter()
 @vehicle_router.post('/vehicle', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
 def create(vehicle: Vehicle):
     db = Session()
-    result=VehicleService.create_vehicle(db, vehicle)
+    result=VehicleService.create(db, vehicle)
     return JSONResponse(status_code=201, content=jsonable_encoder(result))
 
 
 @vehicle_router.get('/vehicles', tags = ['Vehicle'])
 def get():
     db = Session()
-    result = VehicleService.get_vehicles(db)
+    result = VehicleService.get(db)
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 @vehicle_router.get('/vehicle/{id}', tags = ['Vehicle'])
@@ -42,7 +42,7 @@ def update(vehicle: Vehicle):
     if not result:
         return JSONResponse(status_code=404, content={"message": "Vehicle not found"})
     else:
-        VehicleService.update_vehicle(db, vehicle.id, vehicle)
+        VehicleService.update(db, vehicle.id, vehicle)
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
     
 
@@ -53,6 +53,6 @@ def delete(vehicle: Vehicle):
     if not result:
         return JSONResponse(status_code=404, content={"message": "Vehicle not found"})
     else:
-        VehicleService.delete_vehicle(db, id)
+        VehicleService.delete(db, id)
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
