@@ -2,7 +2,6 @@ from config.database import Base
 from sqlalchemy import Column, Integer, String, Boolean, Float, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
-import models.vehicle as Vehicle
 
 
 class Person(Base):
@@ -16,6 +15,4 @@ class Person(Base):
     married = Column(Boolean)
     monthly_income = Column(Float)
     current_vehicle_id = Column(Integer, ForeignKey("vehicle.id"))
-    # vehicule = relationship("Vehicle", back_populates="person", foreign_keys=[current_vehicle_id])
-
-# Vehicle.person = relationship("Person", order_by=Person.id, back_populates="vehicle")
+    vehicules = relationship("Vehicle", secondary= "vehicle_person", back_populates="person")

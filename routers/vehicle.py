@@ -1,10 +1,9 @@
 from fastapi import APIRouter
-from models.vehicle import Vehicle as VehicleModel
 from config.database import Base, engine, Session
 from datetime import datetime
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from schemas.vehicle import Vehicle
+from schemas.vehicle_schema import VehicleSchema as Vehicle
 from services.vehicle import VehicleService
 from middlewares.jwt_handler import JWTHandler
 from fastapi import Depends, Path, Query

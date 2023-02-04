@@ -3,7 +3,7 @@ from config.database import Base, engine, Session
 from datetime import datetime
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from schemas.person import PersonCreate
+from schemas.person import PersonSchema as PersonCreate
 from services.person import PersonService
 from middlewares.jwt_handler import JWTHandler
 from fastapi import Depends, Path, Query

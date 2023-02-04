@@ -4,6 +4,7 @@ from config.database import Base, engine
 from routers.person import person_router
 from routers.vehicle import vehicle_router
 from routers.user import user_router
+from routers.vehicle_person import vehicle_person_router
 from middlewares.error_handler import ErrorHandler
 
 app = FastAPI()
@@ -16,6 +17,7 @@ app.add_middleware(ErrorHandler)
 app.include_router(person_router)
 app.include_router(vehicle_router)
 app.include_router(user_router)
+app.include_router(vehicle_person_router)
 
 @app.get('/', tags = ['Home'])
 def message():
