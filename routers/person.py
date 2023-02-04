@@ -5,11 +5,13 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from schemas.person import PersonCreate
 from services.person import PersonService
+from middlewares.jwt_handler import JWTHandler
+from fastapi import Depends, Path, Query
 
 person_router = APIRouter()
 
 # CRUD person   
-@person_router.post('/person', tags = ['Person'])
+@person_router.post('/person', tags = ['Person'],  dependencies=[Depends(JWTHandler)])
 def create_person(person: PersonCreate):
     db = Session()
     person.date_of_birth = datetime.strptime(person.date_of_birth, '%m/%d/%Y')
@@ -32,7 +34,7 @@ def get_person_by_id(id: int):
         return JSONResponse(status_code=200, content=jsonable_encoder(person))
 
 
-@person_router.put('/person/{id}', tags = ['Person'])
+@person_router.put('/person/{id}', tags = ['Person'], dependencies=[Depends(JWTHandler)])
 def update_person(person: PersonCreate):
     db = Session()
     result= PersonService.get_person(db, id)
@@ -42,7 +44,7 @@ def update_person(person: PersonCreate):
         PersonService.update_person(db, id, person)
         return JSONResponse(status_code=200, content={"message": "Person updated successfully"})
 
-@person_router.delete('/person/{id}', tags = ['Person'])
+@person_router.delete('/person/{id}', tags = ['Person'], dependencies=[Depends(JWTHandler)])
 def delete_person(person: PersonCreate):
     db = Session()
     result= PersonService.get_person(db, id)
