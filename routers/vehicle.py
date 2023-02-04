@@ -14,7 +14,7 @@ vehicle_router = APIRouter()
 
 
 # CRUD vehicle
-@vehicle_router.post('/vehicle', tags = ['Vehicle'], dependencies=[Depends(JWTHandler)])
+@vehicle_router.post('/vehicle', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
 def create_vehicle(vehicle: Vehicle):
     db = Session()
     VehicleService.create_vehicle(db, vehicle)
@@ -36,7 +36,7 @@ def get_vehicle_by_id(id: int):
     else:
         return JSONResponse(status_code=200, content=jsonable_encoder(vehicle))
 
-@vehicle_router.put('/vehicle/{id}', tags = ['Vehicle'], dependencies=[Depends(JWTHandler)])
+@vehicle_router.put('/vehicle/{id}', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
 def update_vehicle(vehicle: Vehicle):
     db = Session()
     result= VehicleService.get_vehicle(db, id)
@@ -47,7 +47,7 @@ def update_vehicle(vehicle: Vehicle):
         return JSONResponse(status_code=200, content={"message": "Vehicle updated successfully"})
     
 
-@vehicle_router.delete('/vehicle/{id}', tags = ['Vehicle'], dependencies=[Depends(JWTHandler)])
+@vehicle_router.delete('/vehicle/{id}', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
 def delete_vehicle(vehicle: Vehicle):
     db = Session()
     result= VehicleService.get_vehicle(db, id)

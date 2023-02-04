@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional, List
 
 
 
@@ -10,3 +11,4 @@ class PersonCreate(BaseModel):
     profession: str
     married: bool
     monthly_income: float
+    current_vehicle_id: Optional[int] = None

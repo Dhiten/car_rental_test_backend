@@ -11,6 +11,6 @@ class Vehicle(Base):
     doors = Column(Integer)
     vehicle_type = Column(String)
     plate = Column(String)
-    # person = relationship("Person", back_populates="vehicle")
+    person = relationship("Person", back_populates="vehicle")
 
 # Person.vehicle = relationship("Vehicle", order_by=Vehicle.id, back_populates="person")
