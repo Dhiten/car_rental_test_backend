@@ -9,5 +9,5 @@
 #source venv/Bin/actiave (linux)
 #From here you had to use the commands on venv
 
-#pip install requirement.txt
+#pip install -r requirement.txt
 # uvicorn main:app --reload --port 3000 
