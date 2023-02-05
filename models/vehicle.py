@@ -10,4 +10,4 @@ class Vehicle(Base):
     doors = Column(Integer)
     vehicle_type = Column(String)
     plate = Column(String)
-    people = relationship("Person", secondary= "vehicle_person", back_populates="vehicle")
+    # people = relationship("Person", secondary= "vehicle_person", back_populates="vehicle")

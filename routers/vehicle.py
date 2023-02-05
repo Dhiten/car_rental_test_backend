@@ -3,7 +3,7 @@ from config.database import Base, engine, Session
 from datetime import datetime
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from schemas.vehicle_schema import VehicleSchema as Vehicle
+from schemas.vehicle import  Vehicle
 from services.vehicle import VehicleService
 from middlewares.jwt_handler import JWTHandler
 from fastapi import Depends, Path, Query
@@ -13,7 +13,8 @@ vehicle_router = APIRouter()
 
 
 # CRUD vehicle
-@vehicle_router.post('/vehicle', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
+# , dependencies=[Depends(JWTHandler())]
+@vehicle_router.post('/vehicle', tags = ['Vehicle'])
 def create(vehicle: Vehicle):
     db = Session()
     result=VehicleService.create(db, vehicle)
@@ -46,10 +47,10 @@ def update(vehicle: Vehicle):
         return JSONResponse(status_code=200, content=jsonable_encoder(result))
     
 
-@vehicle_router.delete('/vehicle/{id}', tags = ['Vehicle'], dependencies=[Depends(JWTHandler())])
-def delete(vehicle: Vehicle):
+@vehicle_router.delete('/vehicle/{id}', tags = ['Vehicle'])
+def delete(id: int):
     db = Session()
-    result= VehicleService.get_vehicle(db, vehicle.id)
+    result= VehicleService.get_vehicle(db, id)
     if not result:
         return JSONResponse(status_code=404, content={"message": "Vehicle not found"})
     else:

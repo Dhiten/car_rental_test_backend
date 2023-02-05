@@ -14,5 +14,5 @@ class Person(Base):
     profession = Column(String)
     married = Column(Boolean)
     monthly_income = Column(Float)
-    current_vehicle_id = Column(Integer, ForeignKey("vehicle.id"))
-    vehicules = relationship("Vehicle", secondary= "vehicle_person", back_populates="person")
+    # current_vehicle_id = Column(Integer, ForeignKey("vehicle.id"))
+    # vehicules = relationship("Vehicle", secondary= "vehicle_person", back_populates="person")

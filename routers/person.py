@@ -3,7 +3,7 @@ from config.database import Base, engine, Session
 from datetime import datetime
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from schemas.person import PersonSchema as PersonCreate
+from schemas.person import PersonCreate
 from services.person import PersonService
 from middlewares.jwt_handler import JWTHandler
 from fastapi import Depends, Path, Query
@@ -11,7 +11,8 @@ from fastapi import Depends, Path, Query
 person_router = APIRouter()
 
 # CRUD person   
-@person_router.post('/person', tags = ['Person'],  dependencies=[Depends(JWTHandler())])
+# ,  dependencies=[Depends(JWTHandler())]
+@person_router.post('/person', tags = ['Person'])
 def create(person: PersonCreate):
     db = Session()
     person.date_of_birth = datetime.strptime(person.date_of_birth, '%m/%d/%Y')

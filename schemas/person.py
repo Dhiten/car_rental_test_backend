@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from schemas.vehicle import Vehicle
+# from schemas.vehicle import Vehicle
 
 
 
@@ -12,7 +12,7 @@ class PersonCreate(BaseModel):
     profession: str
     married: bool
     monthly_income: float
-    current_vehicle_id: Optional[int] = None
+    # current_vehicle_id: Optional[int] = None
 
-class PersonSchema(PersonCreate):
-  vehicules: List[Vehicle] = []
+# class PersonSchema(PersonCreate):
+#   vehicles: List[Vehicle] = []
