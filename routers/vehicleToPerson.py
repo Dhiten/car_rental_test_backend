@@ -11,9 +11,10 @@ from schemas.vehicleToPerson import VehiclePerson
 vehicle_person_router = APIRouter()
 
 #Create relationship
-@vehicle_person_router.post('/vehicle_person', tags = ['VehiclePerson'], dependencies=[Depends(JWTHandler())])
+@vehicle_person_router.post('/vehicle_person', tags = ['VehiclePerson'])
 def create(vehicle_person: VehiclePerson):
     db = Session()
+    vehicle_person.date = datetime.strptime(vehicle_person.date, '%m/%d/%Y')
     result = VehicleToPerson.create(db, vehicle_person)
     return JSONResponse(status_code=201, content=jsonable_encoder(result))
 

@@ -17,8 +17,7 @@ app.add_middleware(
      allow_methods=["*"],
      allow_headers=["*"],
 )
-
-add_middlewares(app)
+#add_middlewares(app)
 include_routes(app)
 
 @app.get('/', tags = ['Home'])
