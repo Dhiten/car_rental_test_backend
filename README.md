@@ -10,4 +10,4 @@
 # From here you had to use the commands on venv
 
 # pip install -r requirement.txt
-# uvicorn main:app --reload --port 3000 
+# uvicorn main:app --reload --port 8000 
