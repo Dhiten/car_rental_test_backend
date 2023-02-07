@@ -1,6 +1,8 @@
 from config.database import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+from models.vehicleToPerson import VehicleToPerson
+
 
 class Vehicle(Base):
     __tablename__ = "vehicle"
@@ -10,4 +12,4 @@ class Vehicle(Base):
     doors = Column(Integer)
     vehicle_type = Column(String)
     plate = Column(String)
-    # people = relationship("Person", secondary= "vehicle_person", back_populates="vehicle")
+    people = relationship("VehicleToPerson", back_populates="vehicule")

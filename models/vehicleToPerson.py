@@ -1,5 +1,6 @@
 from config.database import Base
 from sqlalchemy import Column, Integer,Boolean, Date
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 
 
@@ -9,4 +10,6 @@ class VehicleToPerson(Base):
     person_id = Column(Integer, ForeignKey('person.id'), primary_key=True)
     date = Column(Date, nullable=False)
     active = Column(Boolean, nullable=False)
+    person = relationship("Person", back_populates="vehicules")
+    vehicule = relationship("Vehicle", back_populates="people")
 
